@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const usersPath = path.join(process.cwd(), 'DB', 'users.json');
+const todoPath = path.join(process.cwd(), 'DB', 'todos.json');
 
 const getUsers = async (req, res) => {
   try {
@@ -19,9 +20,9 @@ const createUser = (req, res) => {
   try {
     const users = JSON.parse(fs.readFileSync(usersPath));
     let { id } = [...users].pop();
-   
+
     const newUser = {
-      id: id+1,
+      id: id + 1,
       ...req.body
     }
 
@@ -29,13 +30,13 @@ const createUser = (req, res) => {
 
     users.push(newUser);
 
-  
+
     //guardar usuario en el JSON
     fs.writeFileSync(usersPath, JSON.stringify(users));
 
     res.status(201).json({ newUser });
   } catch (error) {
-    return res.status(500).json({ msg: "Error en el servidor."+error.message });
+    return res.status(500).json({ msg: "Error en el servidor." + error.message });
   }
 }
 
@@ -43,11 +44,19 @@ const getUserById = (req, res) => {
   const { id } = req.params;
   const users = JSON.parse(fs.readFileSync(usersPath));
   const foundUser = users.find(user => user.id === Number(id));
-  res.json(foundUser ? foundUser : 'Usuario con '+id+' no existe.');
+  res.json(foundUser ? foundUser : 'Usuario con ' + id + ' no existe.');
+}
+
+const getTodos = (req, res) => {
+  const { id } = req.params;
+  const todos = JSON.parse(fs.readFileSync(todoPath));
+  const userTodos = todos.filter(todo => todo.userId === Number(id));
+  res.json(userTodos ? userTodos : 'El usuario no tiene lista de tareas');
 }
 
 module.exports = {
   getUsers,
   createUser,
-  getUserById
+  getUserById,
+  getTodos
 }

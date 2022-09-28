@@ -1,5 +1,6 @@
 const express = require('express');
 const userRouter = require('./routes/user.routes');
+const todosRouter = require('./routes/todos.routes');
 
 const app = express();
 const PORT = 5000
@@ -15,6 +16,7 @@ app.use(express.json());
 
 //ROUTES
 app.use(apiRoutes.users, userRouter);
+app.use(apiRoutes.todos, todosRouter);
 app.get('/', (req, res) => res.send("POLPO-API"));
 
 
