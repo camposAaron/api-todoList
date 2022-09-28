@@ -1,5 +1,5 @@
 ### API-TODOLIST
-####   ---------------------------------------------------:
+####   ---------------------------------------------------
 - `npm install` - instalar dependencias
  - `npm run dev`     -   iniciar en modo desarrollo
  #### endpoints:  [api-prueba (getpostman.com)](https://documenter.getpostman.com/view/16777907/2s83f8kYDw)
